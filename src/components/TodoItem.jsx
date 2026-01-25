@@ -14,6 +14,8 @@ function TodoItem({ todo, onToggle, onDelete }) {
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
+    zIndex: isDragging ? 50 : undefined,
+    position: isDragging ? 'relative' : undefined,
   }
 
   return (
@@ -23,7 +25,7 @@ function TodoItem({ todo, onToggle, onDelete }) {
       {...attributes}
       {...listeners}
       className={`flex items-center gap-3 p-3 bg-gray-800 rounded-lg cursor-grab active:cursor-grabbing touch-none ${
-        isDragging ? 'opacity-50 shadow-lg scale-105 z-10' : ''
+        isDragging ? 'opacity-50 shadow-lg scale-105' : ''
       }`}
     >
       {/* Grip icon */}
