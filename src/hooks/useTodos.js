@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import { collection, query, onSnapshot, addDoc, updateDoc, deleteDoc, doc, writeBatch } from 'firebase/firestore'
 import { db } from '../firebase'
-import { useAuth } from '../context/AuthContext'
+import { useAuth } from './useAuth'
 
 const LOCAL_STORAGE_KEY = 'todos-local'
 
