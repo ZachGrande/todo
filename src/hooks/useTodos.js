@@ -69,8 +69,11 @@ export function useTodos() {
       return unsubscribe
     } else {
       // User is logged out - use localStorage
-      setTodos(getLocalTodos())
-      setLoading(false)
+      // Defer state updates to avoid synchronous setState in effect body
+      queueMicrotask(() => {
+        setTodos(getLocalTodos())
+        setLoading(false)
+      })
     }
   }, [user, getTodosRef, showMergePrompt])
 
