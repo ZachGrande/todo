@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { arrayMove } from '@dnd-kit/sortable'
 import TodoInput from './components/TodoInput'
 import TodoList from './components/TodoList'
 
@@ -6,6 +7,14 @@ function App() {
   const [todos, setTodos] = useState([])
   const [inputValue, setInputValue] = useState('')
   const [error, setError] = useState('')
+
+  const reorderTodos = (activeId, overId) => {
+    setTodos((todos) => {
+      const oldIndex = todos.findIndex((todo) => todo.id === activeId)
+      const newIndex = todos.findIndex((todo) => todo.id === overId)
+      return arrayMove(todos, oldIndex, newIndex)
+    })
+  }
 
   const addTodo = (e) => {
     e.preventDefault()
@@ -55,6 +64,7 @@ function App() {
           todos={todos}
           onToggle={toggleComplete}
           onDelete={deleteTodo}
+          onReorder={reorderTodos}
         />
       </div>
     </div>
