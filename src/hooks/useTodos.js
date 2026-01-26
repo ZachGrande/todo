@@ -23,11 +23,15 @@ function clearLocalTodos() {
 }
 
 export function useTodos() {
-  const { user } = useAuth()
+  const { user, loading: authLoading } = useAuth()
   const [todos, setTodos] = useState([])
-  const [loading, setLoading] = useState(true)
+  const [loadedUserId, setLoadedUserId] = useState(undefined) // undefined = not loaded yet, null = loaded for anonymous
   const [showMergePrompt, setShowMergePrompt] = useState(false)
   const [localTodosToMerge, setLocalTodosToMerge] = useState([])
+
+  // Combined loading state - we're loading if auth is loading OR we haven't loaded data for current user
+  const currentUserId = user?.uid ?? null
+  const loading = authLoading || loadedUserId !== currentUserId
 
   // Get Firestore collection reference for user's todos
   const getTodosRef = useCallback(() => {
@@ -37,6 +41,11 @@ export function useTodos() {
 
   // Load todos - either from Firestore (logged in) or localStorage (logged out)
   useEffect(() => {
+    // Don't load todos until auth state is determined
+    if (authLoading) {
+      return
+    }
+
     if (user) {
       // User is logged in - sync with Firestore
       const todosRef = getTodosRef()
@@ -60,10 +69,10 @@ export function useTodos() {
         }
         
         setTodos(firestoreTodos)
-        setLoading(false)
+        setLoadedUserId(user.uid)
       }, (error) => {
         console.error('Error fetching todos:', error)
-        setLoading(false)
+        setLoadedUserId(user.uid)
       })
 
       return unsubscribe
@@ -72,10 +81,10 @@ export function useTodos() {
       // Defer state updates to avoid synchronous setState in effect body
       queueMicrotask(() => {
         setTodos(getLocalTodos())
-        setLoading(false)
+        setLoadedUserId(null)
       })
     }
-  }, [user, getTodosRef, showMergePrompt])
+  }, [user, authLoading, getTodosRef, showMergePrompt])
 
   // Add a todo
   const addTodo = useCallback(async (text) => {
