@@ -45,7 +45,7 @@ function TodoList({ todos, onToggle, onDelete, onReorder }) {
     >
       <SortableContext items={todos.map(t => t.id)} strategy={verticalListSortingStrategy}>
         <ul className="space-y-2">
-          <AnimatePresence mode="popLayout">
+          <AnimatePresence mode="popLayout" initial={true}>
             {todos.map(todo => (
               <TodoItem
                 key={todo.id}
