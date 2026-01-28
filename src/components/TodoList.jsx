@@ -38,19 +38,19 @@ function TodoList({ todos, onToggle, onDelete, onReorder }) {
       onDragEnd={handleDragEnd}
     >
       <SortableContext items={todos.map(t => t.id)} strategy={verticalListSortingStrategy}>
-        <AnimatePresence mode="popLayout" initial={false}>
-          {todos.length > 0 && (
-            <ul className="space-y-2">
-              {todos.map(todo => (
-                <TodoItem
-                  key={todo.id}
-                  todo={todo}
-                  onToggle={onToggle}
-                  onDelete={onDelete}
-                />
-              ))}
-            </ul>
-          )}
+        <ul className="space-y-2">
+          <AnimatePresence mode="popLayout" initial={false}>
+            {todos.map(todo => (
+              <TodoItem
+                key={todo.id}
+                todo={todo}
+                onToggle={onToggle}
+                onDelete={onDelete}
+              />
+            ))}
+          </AnimatePresence>
+        </ul>
+        <AnimatePresence>
           {todos.length === 0 && (
             <motion.p
               key="empty-message"
