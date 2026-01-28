@@ -28,7 +28,7 @@ function TodoItem({ todo, onToggle, onDelete }) {
       layout
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, x: '-100%' }}
+      exit={{ opacity: 0 }}
       transition={{ duration: 0.25, ease: 'easeOut' }}
       className={`flex items-center gap-3 p-3 bg-gray-800 rounded-lg cursor-grab active:cursor-grabbing touch-none ${
         isDragging ? 'opacity-50 shadow-lg scale-105' : ''
