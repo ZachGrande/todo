@@ -10,6 +10,7 @@ import {
   SortableContext,
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable'
+import { AnimatePresence } from 'motion/react'
 import TodoItem from './TodoItem'
 
 function TodoList({ todos, onToggle, onDelete, onReorder }) {
@@ -44,14 +45,16 @@ function TodoList({ todos, onToggle, onDelete, onReorder }) {
     >
       <SortableContext items={todos.map(t => t.id)} strategy={verticalListSortingStrategy}>
         <ul className="space-y-2">
-          {todos.map(todo => (
-            <TodoItem
-              key={todo.id}
-              todo={todo}
-              onToggle={onToggle}
-              onDelete={onDelete}
-            />
-          ))}
+          <AnimatePresence mode="popLayout">
+            {todos.map(todo => (
+              <TodoItem
+                key={todo.id}
+                todo={todo}
+                onToggle={onToggle}
+                onDelete={onDelete}
+              />
+            ))}
+          </AnimatePresence>
         </ul>
       </SortableContext>
     </DndContext>

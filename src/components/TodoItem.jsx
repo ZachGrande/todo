@@ -1,5 +1,6 @@
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
+import { motion } from 'motion/react'
 
 function TodoItem({ todo, onToggle, onDelete }) {
   const {
@@ -19,11 +20,16 @@ function TodoItem({ todo, onToggle, onDelete }) {
   }
 
   return (
-    <li
+    <motion.li
       ref={setNodeRef}
       style={style}
       {...attributes}
       {...listeners}
+      layout
+      initial={{ opacity: 1, x: 0 }}
+      animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, x: '-100%' }}
+      transition={{ duration: 0.25, ease: 'easeOut' }}
       className={`flex items-center gap-3 p-3 bg-gray-800 rounded-lg cursor-grab active:cursor-grabbing touch-none ${
         isDragging ? 'opacity-50 shadow-lg scale-105' : ''
       }`}
@@ -61,7 +67,7 @@ function TodoItem({ todo, onToggle, onDelete }) {
       >
         Delete
       </button>
-    </li>
+    </motion.li>
   )
 }
 
