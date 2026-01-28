@@ -88,11 +88,13 @@ export function useTodos() {
 
   // Add a todo
   const addTodo = useCallback(async (text) => {
+    // Calculate the next order value as max existing order + 1 to ensure new items go to the bottom
+    const maxOrder = todos.length > 0 ? Math.max(...todos.map(t => t.order ?? 0)) : -1
     const newTodo = {
       text,
       completed: false,
       createdAt: Date.now(),
-      order: todos.length
+      order: maxOrder + 1
     }
 
     if (user) {

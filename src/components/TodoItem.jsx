@@ -1,5 +1,6 @@
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
+import { motion } from 'motion/react'
 
 function TodoItem({ todo, onToggle, onDelete }) {
   const {
@@ -24,10 +25,18 @@ function TodoItem({ todo, onToggle, onDelete }) {
       style={style}
       {...attributes}
       {...listeners}
-      className={`flex items-center gap-3 p-3 bg-gray-800 rounded-lg cursor-grab active:cursor-grabbing touch-none ${
-        isDragging ? 'opacity-50 shadow-lg scale-105' : ''
-      }`}
+      className="touch-none"
     >
+      <motion.div
+        layout={!isDragging}
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.25, ease: 'easeOut' }}
+        className={`flex items-center gap-3 p-3 bg-gray-800 rounded-lg cursor-grab active:cursor-grabbing ${
+          isDragging ? 'opacity-50 shadow-lg scale-105' : ''
+        }`}
+      >
       {/* Grip icon */}
       <div className="flex flex-col gap-0.5 text-gray-500">
         <div className="flex gap-0.5">
@@ -61,6 +70,7 @@ function TodoItem({ todo, onToggle, onDelete }) {
       >
         Delete
       </button>
+      </motion.div>
     </li>
   )
 }
