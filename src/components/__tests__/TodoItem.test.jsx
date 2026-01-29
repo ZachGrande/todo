@@ -25,7 +25,7 @@ jest.mock('@dnd-kit/utilities', () => ({
 // Mock motion/react - filter out Framer Motion specific props
 jest.mock('motion/react', () => ({
   motion: {
-    div: ({ children, className, layout, initial, animate, exit, transition, ...props }) => (
+    div: ({ children, className, layout: _layout, initial: _initial, animate: _animate, exit: _exit, transition: _transition, ...props }) => (
       <div className={className} {...props}>{children}</div>
     ),
   },

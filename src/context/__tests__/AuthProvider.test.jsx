@@ -123,7 +123,7 @@ describe('AuthProvider', () => {
       const handleClick = async () => {
         try {
           await context.signInWithGoogle();
-        } catch (e) {
+        } catch {
           // Error is expected to be thrown
         }
       };
@@ -172,7 +172,7 @@ describe('AuthProvider', () => {
       const handleClick = async () => {
         try {
           await context.logout();
-        } catch (e) {
+        } catch {
           // Error is expected to be thrown
         }
       };
@@ -210,11 +210,19 @@ describe('AuthProvider', () => {
   });
 
   it('provides context with all expected properties', () => {
-    let contextValue;
-    
     function ContextCapture() {
-      contextValue = useContext(AuthContext);
-      return null;
+      const context = useContext(AuthContext);
+      return (
+        <div
+          data-testid="context-info"
+          data-has-user={'user' in context}
+          data-has-loading={'loading' in context}
+          data-has-signin={'signInWithGoogle' in context}
+          data-has-logout={'logout' in context}
+          data-signin-is-function={typeof context.signInWithGoogle === 'function'}
+          data-logout-is-function={typeof context.logout === 'function'}
+        />
+      );
     }
 
     render(
@@ -223,11 +231,12 @@ describe('AuthProvider', () => {
       </AuthProvider>
     );
 
-    expect(contextValue).toHaveProperty('user');
-    expect(contextValue).toHaveProperty('loading');
-    expect(contextValue).toHaveProperty('signInWithGoogle');
-    expect(contextValue).toHaveProperty('logout');
-    expect(typeof contextValue.signInWithGoogle).toBe('function');
-    expect(typeof contextValue.logout).toBe('function');
+    const element = screen.getByTestId('context-info');
+    expect(element.dataset.hasUser).toBe('true');
+    expect(element.dataset.hasLoading).toBe('true');
+    expect(element.dataset.hasSignin).toBe('true');
+    expect(element.dataset.hasLogout).toBe('true');
+    expect(element.dataset.signinIsFunction).toBe('true');
+    expect(element.dataset.logoutIsFunction).toBe('true');
   });
 });

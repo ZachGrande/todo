@@ -42,10 +42,10 @@ jest.mock('@dnd-kit/utilities', () => ({
 jest.mock('motion/react', () => ({
   AnimatePresence: ({ children }) => <>{children}</>,
   motion: {
-    div: ({ children, className, layout, initial, animate, exit, transition, ...props }) => (
+    div: ({ children, className, layout: _layout, initial: _initial, animate: _animate, exit: _exit, transition: _transition, ...props }) => (
       <div className={className} {...props}>{children}</div>
     ),
-    p: ({ children, className, layout, initial, animate, exit, transition, ...props }) => (
+    p: ({ children, className, layout: _layout, initial: _initial, animate: _animate, exit: _exit, transition: _transition, ...props }) => (
       <p className={className} {...props}>{children}</p>
     ),
   },
