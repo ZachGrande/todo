@@ -1,4 +1,10 @@
 import '@testing-library/jest-dom';
+import { jestPreviewConfigure } from 'jest-preview';
+
+// Configure jest-preview for visual debugging
+jestPreviewConfigure({
+  autoPreview: true,
+});
 
 // Mock localStorage
 const localStorageMock = {
