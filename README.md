@@ -149,30 +149,22 @@ service cloud.firestore {
 
 ### Firebase Setup
 
-To configure Firebase for your own deployment:
+This project uses a Firebase project with the configuration hardcoded in `src/firebase.js`. Here's how it was set up:
 
-1. Create a new Firebase project at [console.firebase.google.com](https://console.firebase.google.com)
+1. Created a new Firebase project at [console.firebase.google.com](https://console.firebase.google.com)
 
-2. Enable **Authentication** and add Google as a sign-in provider
+2. Enabled **Authentication** and added Google as a sign-in provider
 
-3. Create a **Firestore Database** in production mode
+3. Created a **Firestore Database** in production mode
 
-4. Create a `.env` file in the project root with your Firebase config:
-   ```env
-   VITE_FIREBASE_API_KEY=your-api-key
-   VITE_FIREBASE_AUTH_DOMAIN=your-project.firebaseapp.com
-   VITE_FIREBASE_PROJECT_ID=your-project-id
-   VITE_FIREBASE_STORAGE_BUCKET=your-project.appspot.com
-   VITE_FIREBASE_MESSAGING_SENDER_ID=your-sender-id
-   VITE_FIREBASE_APP_ID=your-app-id
-   ```
+4. Copied the Firebase config object from the Firebase console into `src/firebase.js`
 
-5. Deploy security rules:
+5. Deployed security rules:
    ```bash
    firebase deploy --only firestore:rules
    ```
 
-6. Deploy the app:
+6. Deployed the app:
    ```bash
    npm run build
    firebase deploy --only hosting
