@@ -419,14 +419,17 @@ graph TB
 mindmap
   root((Todo App))
     Frontend
-      React 18
+      React 19
       Vite
-      Tailwind CSS
+      Tailwind CSS 4
       React Router v7
     Drag & Drop
       @dnd-kit/core
       @dnd-kit/sortable
       @dnd-kit/utilities
+    Animations
+      Motion
+        Framer Motion
     Backend Services
       Firebase Auth
         Google OAuth
@@ -437,6 +440,9 @@ mindmap
     Storage
       localStorage
         Offline Mode
+    Testing
+      Jest
+      React Testing Library
 ```
 
 ---
