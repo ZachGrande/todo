@@ -508,15 +508,17 @@ main.jsx
 
 | Layer | Technology |
 |-------|------------|
-| Frontend Framework | React 18 |
+| Frontend Framework | React 19 |
 | Build Tool | Vite |
-| Styling | Tailwind CSS |
+| Styling | Tailwind CSS 4 |
 | Routing | React Router v7 |
-| Drag & Drop | @dnd-kit/core, @dnd-kit/sortable |
+| Drag & Drop | @dnd-kit/core, @dnd-kit/sortable, @dnd-kit/utilities |
+| Animations | Motion (Framer Motion) |
 | Authentication | Firebase Auth (Google Provider) |
 | Database | Cloud Firestore |
 | Hosting | Firebase Hosting |
 | Local Storage | Browser localStorage API |
+| Testing | Jest, React Testing Library |
 
 ---
 
