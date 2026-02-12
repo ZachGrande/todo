@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import { collection, query, onSnapshot, addDoc, updateDoc, deleteDoc, doc, writeBatch } from 'firebase/firestore'
-import { db } from '../firebase'
+import { logEvent } from 'firebase/analytics'
+import { db, analytics } from '../firebase'
 import { useAuth } from './useAuth'
 
 const LOCAL_STORAGE_KEY = 'todos-local'
@@ -100,40 +101,75 @@ export function useTodos() {
     if (user) {
       const todosRef = getTodosRef()
       await addDoc(todosRef, newTodo)
+      logEvent(analytics, 'create_todo', {
+        user_id: user.uid,
+        todo_length: text.length,
+        total_todos: todos.length + 1
+      })
     } else {
       const todoWithId = { ...newTodo, id: Date.now().toString() }
       const updatedTodos = [...todos, todoWithId]
       setTodos(updatedTodos)
       setLocalTodos(updatedTodos)
+      logEvent(analytics, 'create_todo', {
+        user_id: 'anonymous',
+        todo_length: text.length,
+        total_todos: updatedTodos.length
+      })
     }
   }, [user, todos, getTodosRef])
 
   // Toggle todo completion
   const toggleComplete = useCallback(async (id) => {
+    const todo = todos.find(t => t.id === id)
+    if (!todo) return
+    
+    const newCompletedState = !todo.completed
+    
     if (user) {
       const todoRef = doc(db, 'users', user.uid, 'todos', id)
-      const todo = todos.find(t => t.id === id)
-      if (todo) {
-        await updateDoc(todoRef, { completed: !todo.completed })
-      }
+      await updateDoc(todoRef, { completed: newCompletedState })
+      logEvent(analytics, 'toggle_todo_complete', {
+        user_id: user.uid,
+        completed: newCompletedState,
+        total_todos: todos.length,
+        completed_todos: todos.filter(t => t.completed).length + (newCompletedState ? 1 : -1)
+      })
     } else {
       const updatedTodos = todos.map(todo =>
-        todo.id === id ? { ...todo, completed: !todo.completed } : todo
+        todo.id === id ? { ...todo, completed: newCompletedState } : todo
       )
       setTodos(updatedTodos)
       setLocalTodos(updatedTodos)
+      logEvent(analytics, 'toggle_todo_complete', {
+        user_id: 'anonymous',
+        completed: newCompletedState,
+        total_todos: updatedTodos.length,
+        completed_todos: updatedTodos.filter(t => t.completed).length
+      })
     }
   }, [user, todos])
 
   // Delete a todo
   const deleteTodo = useCallback(async (id) => {
+    const todoToDelete = todos.find(todo => todo.id === id)
     if (user) {
       const todoRef = doc(db, 'users', user.uid, 'todos', id)
       await deleteDoc(todoRef)
+      logEvent(analytics, 'delete_todo', {
+        user_id: user.uid,
+        was_completed: todoToDelete?.completed || false,
+        total_todos: todos.length - 1
+      })
     } else {
       const updatedTodos = todos.filter(todo => todo.id !== id)
       setTodos(updatedTodos)
       setLocalTodos(updatedTodos)
+      logEvent(analytics, 'delete_todo', {
+        user_id: 'anonymous',
+        was_completed: todoToDelete?.completed || false,
+        total_todos: updatedTodos.length
+      })
     }
   }, [user, todos])
 
