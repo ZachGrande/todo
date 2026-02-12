@@ -5,6 +5,7 @@ import { AuthContext } from '../../context/AuthContext';
 // Mock Firebase
 jest.mock('../../firebase', () => ({
   db: {},
+  analytics: {},
 }));
 
 // Mock Firebase Firestore functions
@@ -20,6 +21,11 @@ jest.mock('firebase/firestore', () => ({
     update: jest.fn(),
     commit: jest.fn(),
   })),
+}));
+
+// Mock Firebase Analytics functions
+jest.mock('firebase/analytics', () => ({
+  logEvent: jest.fn(),
 }));
 
 import { onSnapshot, addDoc, updateDoc, deleteDoc, doc, collection, query, writeBatch } from 'firebase/firestore';

@@ -9,6 +9,9 @@ export const googleProvider = {};
 // Mock Firestore
 export const db = {};
 
+// Mock Analytics
+export const analytics = {};
+
 // Mock Firestore functions
 export const collection = jest.fn();
 export const doc = jest.fn();
