@@ -1,5 +1,6 @@
 # Todo App
 
+[![CI](https://github.com/ZachGrande/todo/actions/workflows/ci.yml/badge.svg)](https://github.com/ZachGrande/todo/actions/workflows/ci.yml)
 [![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white)](https://react.dev/)
 [![Firebase](https://img.shields.io/badge/Firebase-FFCA28?logo=firebase&logoColor=black)](https://firebase.google.com/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-38B2AC?logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
@@ -24,7 +25,7 @@ A todo list application built with React and Firebase. Features sorting (drag & 
 - **Tailwind CSS 4** - Utility-first styling
 - **Firebase** - Authentication and Firestore database
 - **dnd-kit** - Drag-and-drop functionality (`@dnd-kit/core`, `@dnd-kit/sortable`, `@dnd-kit/utilities`)
-- **Motion** - Smooth animations (Framer Motion)
+- **Motion** - Smooth animations (`motion/react`)
 - **React Router** - Client-side routing
 - **Jest + React Testing Library** - Unit and integration testing
 
@@ -121,7 +122,7 @@ users/
             ├── text: string
             ├── completed: boolean
             ├── order: number
-            └── createdAt: timestamp
+            └── createdAt: number
 ```
 
 ### Security Rules
