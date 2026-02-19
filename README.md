@@ -1,5 +1,6 @@
 # Todo App
 
+[![CI](https://github.com/ZachGrande/todo/actions/workflows/ci.yml/badge.svg)](https://github.com/ZachGrande/todo/actions/workflows/ci.yml)
 [![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white)](https://react.dev/)
 [![Firebase](https://img.shields.io/badge/Firebase-FFCA28?logo=firebase&logoColor=black)](https://firebase.google.com/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-38B2AC?logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
