@@ -24,7 +24,7 @@ A todo list application built with React and Firebase. Features sorting (drag & 
 - **Tailwind CSS 4** - Utility-first styling
 - **Firebase** - Authentication and Firestore database
 - **dnd-kit** - Drag-and-drop functionality (`@dnd-kit/core`, `@dnd-kit/sortable`, `@dnd-kit/utilities`)
-- **Motion** - Smooth animations (Framer Motion)
+- **Motion** - Smooth animations (`motion/react`)
 - **React Router** - Client-side routing
 - **Jest + React Testing Library** - Unit and integration testing
 
@@ -121,7 +121,7 @@ users/
             ├── text: string
             ├── completed: boolean
             ├── order: number
-            └── createdAt: timestamp
+            └── createdAt: number
 ```
 
 ### Security Rules
