@@ -6,6 +6,7 @@ import {
   useSensor,
   useSensors,
 } from '@dnd-kit/core'
+import { restrictToVerticalAxis } from '@dnd-kit/modifiers'
 import {
   SortableContext,
   verticalListSortingStrategy,
@@ -35,6 +36,7 @@ function TodoList({ todos, onToggle, onDelete, onReorder }) {
     <DndContext
       sensors={sensors}
       collisionDetection={closestCenter}
+      modifiers={[restrictToVerticalAxis]}
       onDragEnd={handleDragEnd}
     >
       <SortableContext items={todos.map(t => t.id)} strategy={verticalListSortingStrategy}>
