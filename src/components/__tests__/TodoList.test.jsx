@@ -1,11 +1,18 @@
 import { render, screen } from '@testing-library/react';
 import TodoList from '../TodoList';
 
+// Mock @dnd-kit/modifiers
+jest.mock('@dnd-kit/modifiers', () => ({
+  restrictToVerticalAxis: jest.fn(),
+}));
+
 // Mock @dnd-kit/core
 const mockOnDragEnd = jest.fn();
+const mockDndContextModifiers = jest.fn();
 jest.mock('@dnd-kit/core', () => ({
-  DndContext: ({ children, onDragEnd }) => {
+  DndContext: ({ children, onDragEnd, modifiers }) => {
     mockOnDragEnd.mockImplementation(onDragEnd);
+    mockDndContextModifiers.mockImplementation(() => modifiers);
     return <div data-testid="dnd-context">{children}</div>;
   },
   closestCenter: jest.fn(),
@@ -96,6 +103,14 @@ describe('TodoList', () => {
     render(<TodoList {...defaultProps} />);
     
     expect(screen.getByTestId('dnd-context')).toBeInTheDocument();
+  });
+
+  it('restricts dragging to the vertical axis to prevent horizontal page overflow', () => {
+    render(<TodoList {...defaultProps} />);
+
+    const { restrictToVerticalAxis } = jest.requireMock('@dnd-kit/modifiers');
+    const modifiers = mockDndContextModifiers();
+    expect(modifiers).toContain(restrictToVerticalAxis);
   });
 
   it('wraps content in SortableContext', () => {
