@@ -1,4 +1,4 @@
-# Todo App
+# Todo App - dev test
 
 [![CI](https://github.com/ZachGrande/todo/actions/workflows/ci.yml/badge.svg)](https://github.com/ZachGrande/todo/actions/workflows/ci.yml)
 [![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white)](https://react.dev/)
